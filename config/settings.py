@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'areas',
     'reports',
+    'outages',
 ]
 
 MIDDLEWARE = [
