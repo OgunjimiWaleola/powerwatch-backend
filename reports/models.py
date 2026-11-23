@@ -1,7 +1,3 @@
-from django.db import models
-
-# Create your models here.
-
 from django.conf import settings
 from django.db import models
 
@@ -28,6 +24,14 @@ class Report(models.Model):
         'areas.Community',
         on_delete=models.PROTECT,
         related_name='reports'
+    )
+
+    outage = models.ForeignKey(
+        'outages.Outage',
+        on_delete=models.SET_NULL,
+        related_name='reports',
+        null=True,
+        blank=True
     )
 
     status = models.CharField(
