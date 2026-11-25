@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models import Report
+from .services import process_report
 
 
 @admin.register(Report)
@@ -30,4 +32,10 @@ class ReportAdmin(admin.ModelAdmin):
 
     readonly_fields = ('created_at',)
 
+    exclude = ('outage',)
+
     date_hierarchy = 'reported_at'
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        process_report(obj)
