@@ -1,7 +1,5 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
+from django.db.models import Q
 
 
 class Outage(models.Model):
@@ -35,6 +33,14 @@ class Outage(models.Model):
 
     class Meta:
         ordering = ['-started_at']
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['community'],
+                condition=Q(status='ONGOING'),
+                name='unique_ongoing_outage_per_community'
+            )
+        ]
 
     def __str__(self):
         return f"{self.community.name} - {self.get_status_display()}"
